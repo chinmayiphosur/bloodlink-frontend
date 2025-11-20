@@ -1,12 +1,13 @@
 // frontend/src/pages/Login.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import api from "../api";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({
     email: "",
@@ -17,6 +18,9 @@ const Login = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Check for signup success message
+  const signupSuccess = new URLSearchParams(location.search).get("signup") === "success";
 
   const onChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -54,6 +58,22 @@ const Login = () => {
         <p style={{ marginTop: 0, marginBottom: "1.4rem", fontSize: "0.9rem", color: "#9ca3af" }}>
           Log in to your BloodLink dashboard.
         </p>
+
+        {/* Signup Success Message */}
+        {signupSuccess && (
+          <div
+            style={{
+              padding: "0.8rem",
+              backgroundColor: "rgba(34,197,94,0.15)",
+              border: "1px solid rgba(34,197,94,0.3)",
+              borderRadius: "0.5rem",
+              marginBottom: "1rem",
+              color: "#86efac",
+            }}
+          >
+            ✅ Account created successfully! Please log in.
+          </div>
+        )}
 
         <form onSubmit={onSubmit} style={{ display: "grid", gap: "0.9rem" }}>
           {/* Role Selection */}

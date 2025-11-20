@@ -31,12 +31,10 @@ const Signup = () => {
       if (payload.role !== "donor") {
         delete payload.bloodGroup;
       }
-      const res = await api.post("/auth/signup", payload);
-      login(res.data);
-      const role = res.data.user.role;
-      if (role === "donor") navigate("/donor");
-      else if (role === "hospital") navigate("/hospital");
-      else navigate("/admin");
+      // Just signup, don't try to login immediately
+      await api.post("/auth/signup", payload);
+      // Redirect to login page with success message
+      navigate("/login?signup=success");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Signup failed");
