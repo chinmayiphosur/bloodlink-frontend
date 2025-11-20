@@ -12,7 +12,7 @@ const ChatWindow = ({ requestId, user }) => {
     if (!requestId) return;
 
     // Create socket connection
-    const socket = io("http://localhost:4000", {
+    const socket = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:4000", {
       transports: ['websocket', 'polling'],
     });
     socketRef.current = socket;

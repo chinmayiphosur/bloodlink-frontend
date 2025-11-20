@@ -54,7 +54,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     // Create socket only once
     if (!socketRef.current) {
-      const socket = io("http://localhost:4000");
+      const socket = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:4000");
       socketRef.current = socket;
 
       socket.on("donorLocationUpdated", (data) => {

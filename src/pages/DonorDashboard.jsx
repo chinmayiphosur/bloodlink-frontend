@@ -50,10 +50,13 @@ const DonorDashboard = () => {
     }
   }, []);
 
+
   useEffect(() => {
     // Create socket only once
     if (!socketRef.current) {
-      const socket = io("http://localhost:4000");
+      const socket = io(import.meta.env.VITE_BACKEND_URL, {
+        transports: ["websocket"],
+      });
       socketRef.current = socket;
 
       // Join user's personal notification room
