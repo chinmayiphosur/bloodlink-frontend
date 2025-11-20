@@ -5,11 +5,18 @@ import axios from "axios";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
+
   const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [user, setUser] = useState(() => {
     const raw = localStorage.getItem("user");
     return raw ? JSON.parse(raw) : null;
   });
+
+  // Mark loading as complete AFTER reading localStorage
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -33,13 +40,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  // 🆕 allow profile pages to update user info
   const updateUser = (newUser) => {
     setUser(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  const value = { token, user, login, logout, updateUser };
+  const value = { token, user, login, logout, updateUser, loading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
