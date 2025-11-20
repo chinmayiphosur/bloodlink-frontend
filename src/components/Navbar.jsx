@@ -134,6 +134,12 @@ const Navbar = () => {
               <Link to={profilePath}>
                 <button className="btn btn-outline">{t("profile")}</button>
               </Link>
+              {/* 🆕 Dashboard link for admins */}
+              {user.role === "admin" && (
+                <Link to="/admin">
+                  <button className="btn btn-outline">📊 {t("dashboard")}</button>
+                </Link>
+              )}
               {/* 🆕 Certificates for donors */}
               {user.role === "donor" && (
                 <Link to="/donor/certificates">

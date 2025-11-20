@@ -39,10 +39,13 @@ const Login = () => {
 
       login(res.data);
 
-      const role = res.data.user.role;
-      if (role === "donor") navigate("/donor");
-      else if (role === "hospital") navigate("/hospital");
-      else navigate("/admin");
+      // Redirect to appropriate dashboard based on the role they logged in as
+      // (not based on the user's actual role, which might be different)
+      const loginRole = form.role;
+      if (loginRole === "donor") navigate("/donor");
+      else if (loginRole === "hospital") navigate("/hospital");
+      else if (loginRole === "admin") navigate("/admin");
+      else navigate("/"); // fallback
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Login failed");
