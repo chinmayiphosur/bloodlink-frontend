@@ -8,6 +8,12 @@ const ProtectedRoute = ({ children, roles }) => {
   // Wait for auth to load localStorage user
   if (loading) return null;
 
+  // Debug logging - uncomment for troubleshooting
+  // console.log("ProtectedRoute - User:", user);
+  // console.log("ProtectedRoute - Required roles:", roles);
+  // console.log("ProtectedRoute - User role:", user?.role);
+  // console.log("ProtectedRoute - Role check:", roles?.includes(user?.role));
+
   if (!user) return <Navigate to="/login" replace />;
 
   if (roles && !roles.includes(user.role)) {
